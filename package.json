@@ -1,0 +1,22 @@
+{
+  "name": "implode",
+  "author": {
+    "name": "Markus Ast",
+    "email": "npm.m@rkusa.st"
+  },
+  "version": "1.0.0",
+  "main": "lib/implode",
+  "homepage": "https://github.com/rkusa/implode",
+  "devDependencies": {
+    "mocha": "1.10.x",
+    "should": "1.2.x"
+  },
+  "bugs": "https://github.com/rkusa/implode/issues",
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/rkusa/implode.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
