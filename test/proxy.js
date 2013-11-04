@@ -3,6 +3,8 @@ var implode = require('../lib/implode')
   , EventEmitter = require('events').EventEmitter
   , proxy = require('node-eventproxy')
 
+proxy.enable(EventEmitter)
+
 describe('Function Proxy', function() {
   it('should be serializable and deserializable', function() {
     var obj = { fn: function() {} }
