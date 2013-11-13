@@ -11,7 +11,8 @@ describe('Function Proxy', function() {
       , context = {}
     var prepared = implode({
       obj: obj,
-      test: proxy(obj, 'fn', context, 1, 2)
+      test: proxy(obj, 'fn', context, 1, 2, proxy(obj, 'fn')),
+      arr: []
     })
     with (prepared.test.$proxy) {
       target.should.have.property('$ref', '#.obj')
@@ -24,6 +25,7 @@ describe('Function Proxy', function() {
       target.should.have.property('fn')
       method.should.equal('fn')
       context.should.equal(context)
+      args.should.have.lengthOf(3)
       args.should.include(1, 2)
     }
   })
@@ -34,11 +36,15 @@ describe('Function Proxy', function() {
       , obj = { fn: function() {
         this.res = true
       } }
-      , context = {}
     a.on('event1', proxy(obj, 'fn', { res: false }))
+    a.once('event2', proxy(obj, 'fn', { res: false }))
     var prepared = implode(a)
-    var recovered = implode.recover(prepared)
+    var recovered = implode.recover(JSON.parse(JSON.stringify(prepared)))
     recovered.emit('event1')
     recovered._events.event1._proxied.context.res.should.be.ok
+    var context = recovered._events.event2.listener._proxied.context
+    recovered.emit('event2')
+    context.res.should.be.ok
+    should.strictEqual(recovered._events.event2, undefined)
   })
 })

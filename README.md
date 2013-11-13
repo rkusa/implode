@@ -11,7 +11,7 @@ This library implodes complex Javascript objects preparing them to be serialized
 ```json
 {
   "name": "implode",
-  "version": "1.1.1"
+  "version": "1.1.2"
 }
 ```
 
