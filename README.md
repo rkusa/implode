@@ -8,14 +8,9 @@ This library implodes complex Javascript objects preparing them to be serialized
 * constructors
 * constructor instances
 
-```json
-{
-  "name": "implode",
-  "version": "1.1.4"
-}
-```
-
+[![NPM](https://badge.fury.io/js/implode.png)](https://npmjs.org/package/implode)
 [![Build Status](https://secure.travis-ci.org/rkusa/implode.png)](http://travis-ci.org/rkusa/implode)
+[![Dependency Status](https://david-dm.org/rkusa/implode.png?theme=shields.io)](https://david-dm.org/rkusa/implode)
 
 ## Usage
 
@@ -33,9 +28,9 @@ To use constructors, e.g.:
 var User = function(id, name) {
   this.id = id
   this.name = name
-  
+
   // when being recovered, this constructor is called without arguments,
-  // therefore the bootstrap logic is moved to a seperate method 
+  // therefore the bootstrap logic is moved to a seperate method
   this.init()
 }
 
