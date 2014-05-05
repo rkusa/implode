@@ -4,15 +4,15 @@
     "name": "Markus Ast",
     "email": "npm.m@rkusa.st"
   },
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "lib/implode",
   "homepage": "https://github.com/rkusa/implode",
   "dependencies": {
-    "node-eventproxy": "^0.3.2"
+    "node-eventproxy": "~0.3.2"
   },
   "devDependencies": {
-    "mocha": "^1.18.2",
-    "should": "^3.3.1"
+    "mocha": "~1.18.2",
+    "should": "~3.3.1"
   },
   "bugs": "https://github.com/rkusa/implode/issues",
   "repository" : {
