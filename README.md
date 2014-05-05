@@ -8,17 +8,21 @@ This library implodes complex Javascript objects preparing them to be serialized
 * constructors
 * constructor instances
 
-[![NPM](https://badge.fury.io/js/implode.png)](https://npmjs.org/package/implode)
-[![Build Status](https://secure.travis-ci.org/rkusa/implode.png)](http://travis-ci.org/rkusa/implode)
-[![Dependency Status](https://david-dm.org/rkusa/implode.png?theme=shields.io)](https://david-dm.org/rkusa/implode)
+[![NPM](https://badge.fury.io/js/implode.svg)](https://npmjs.org/package/implode)
+[![Build Status](https://secure.travis-ci.org/rkusa/implode.svg)](http://travis-ci.org/rkusa/implode)
+[![Dependency Status](https://david-dm.org/rkusa/implode.svg?theme=shields.io)](https://david-dm.org/rkusa/implode)
 
 ## Usage
 
 ```js
 var implode    = require('implode')
-var serialized = JSON.stringify(implode(obj)) // serialize
-var recovered  = implode.recover(JSON.parse(serialized)) // deserialize
+var serialized = implode(obj) // serialize
+var recovered  = implode.recover(serialized) // deserialize
 ```
+
+To put the serialized object into a `<script />` tag, use `implode(obj).toString()`.
+
+**Breaking change in `>=2.0.0`:** Prior to `2.0.0` it was possible to use `JSON.stringify()` and `JSON.parse()` to convert the serialized object to a string presentation and vice versa. However, to get rid of `eval()`, version `2.0.0` introduced `implode(obj).toString()`, which is similar to JSON, except that `functions` are not wrapped into double quotes. This allows to but the string presentation of the serialized object into `<script/>` tags directly. Using these `JSON` methods is still possible, but removes `functions` from the serialized object.
 
 ### Constructors
 
@@ -37,7 +41,23 @@ var User = function(id, name) {
 User.prototype.init = function() {
   this.excerpt = this.id + '-' + this.name
 }
+```
 
+... they have to be registered:
+
+```js
+implode.register(
+  'User', // unique identifier
+  User, // the constructor
+  ['id', 'name'] // a whitelist of properties to be serialized
+)
+```
+
+### Hooks
+
+The following hooks are available:
+
+```js
 User.prototype.$deserialize = function(obj) {
   // this hook allows to postprocess the object when it got recovered
   obj.init()
@@ -48,16 +68,6 @@ User.prototype.$serialize = function() {
   // this hook allows to preprocess the object for the implode process
   return this
 }
-```
-
-... they have to be registered:
-
-```js
-implode.register(
-  'User', // unique identifier
-  User, // the constructor
-  ['id', 'name'] // a whitelist of properties
-)
 ```
 
 ## MIT License

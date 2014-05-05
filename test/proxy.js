@@ -38,8 +38,9 @@ describe('Function Proxy', function() {
       } }
     a.on('event1', proxy(obj, 'fn', { res: false }))
     a.once('event2', proxy(obj, 'fn', { res: false }))
-    var prepared = implode(a)
-    var recovered = implode.recover(JSON.parse(JSON.stringify(prepared)))
+    var prepared = implode(a).toString()
+    eval('prepared = ' + prepared)
+    var recovered = implode.recover(prepared)
     recovered.emit('event1')
     recovered._events.event1._proxied.context.res.should.be.ok
     var context = recovered._events.event2.listener._proxied.context
